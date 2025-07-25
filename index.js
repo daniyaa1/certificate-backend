@@ -8,7 +8,11 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://certificate-frontend-eight.vercel.app',
+  methods: ['POST', 'GET'],
+}));
+
 app.use(express.json());
 
 // 🧠 Use multer with correct storage (retains file extension)
