@@ -8,6 +8,12 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
+// 🌟 Ensure 'uploads' directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
 app.use(cors({
   origin: 'https://certificate-frontend-eight.vercel.app',
   methods: ['POST', 'GET'],
@@ -15,10 +21,10 @@ app.use(cors({
 
 app.use(express.json());
 
-// 🧠 Use multer with correct storage (retains file extension)
+// 💾 Set up Multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, uploadsDir); // Use ensured folder
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
@@ -48,7 +54,7 @@ app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
     res.setHeader('Content-Disposition', `attachment; filename=${name.split(' ').join('_')}_certificate.pdf`);
     res.send(result);
 
-    // 🧹 Delete uploaded background image after sending PDF
+    // 🧹 Delete uploaded background image
     if (bgImagePath && fs.existsSync(bgImagePath)) {
       fs.unlink(bgImagePath, (err) => {
         if (err) console.error('Failed to delete uploaded image:', err);
@@ -56,14 +62,14 @@ app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
     }
   });
 
-  // 🖼 Set background image (full-page)
+  // 🖼 Set background image if available
   if (bgImagePath && fs.existsSync(bgImagePath)) {
     doc.image(bgImagePath, 0, 0, { width: doc.page.width, height: doc.page.height });
   } else {
     console.error("⚠️ No background image provided or path is invalid.");
   }
 
-  // ✍️ Add text content (adjust Y positions if needed)
+  // ✍️ Add text content
   doc
     .fillColor('black')
     .fontSize(24)
