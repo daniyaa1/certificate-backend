@@ -8,7 +8,7 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
-// 🌟 Ensure 'uploads' directory exists
+//  Ensure 'uploads' directory exists
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
@@ -21,7 +21,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// 💾 Set up Multer storage
+//  Set up Multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadsDir); // Use ensured folder
@@ -34,12 +34,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// 🧪 Test Route
+//  Test Route
 app.get('/', (req, res) => {
   res.send('API is working!');
 });
 
-// 📄 Certificate Generation Route
+//  Certificate Generation Route
 app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
   const { name, course, date } = req.body;
   const bgImagePath = req.file?.path;
@@ -54,7 +54,7 @@ app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
     res.setHeader('Content-Disposition', `attachment; filename=${name.split(' ').join('_')}_certificate.pdf`);
     res.send(result);
 
-    // 🧹 Delete uploaded background image
+   
     if (bgImagePath && fs.existsSync(bgImagePath)) {
       fs.unlink(bgImagePath, (err) => {
         if (err) console.error('Failed to delete uploaded image:', err);
@@ -62,14 +62,14 @@ app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
     }
   });
 
-  // 🖼 Set background image if available
+  // Set background image if available
   if (bgImagePath && fs.existsSync(bgImagePath)) {
     doc.image(bgImagePath, 0, 0, { width: doc.page.width, height: doc.page.height });
   } else {
     console.error("⚠️ No background image provided or path is invalid.");
   }
 
-  // ✍️ Add text content
+  //  Add text content
   doc
     .fillColor('black')
     .fontSize(24)
@@ -92,7 +92,7 @@ app.post('/generate-certificate', upload.single('bgImage'), (req, res) => {
   doc.end();
 });
 
-// 🚀 Start server
+//  Start server
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
