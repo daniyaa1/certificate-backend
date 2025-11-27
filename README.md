@@ -6,9 +6,7 @@ This is the backend for the Certificate Generator project. It receives file uplo
 
 ## 🔗 Live Backend Endpoint
 
-🌐 [certificate-backend-production.up.railway.app](https://certificate-backend-production.up.railway.app)
-
-Use this endpoint to interact with the backend from your deployed frontend.
+The backend is deployed and handles certificate generation requests.
 
 ---
 
@@ -24,13 +22,13 @@ Use this endpoint to interact with the backend from your deployed frontend.
 
 ## 📦 API Endpoints
 
-### `POST /generate`
+### `POST /generate-certificate`
 Accepts:
 - Certificate background image
 - CSV file with participant details
 
 Returns:
-- A downloadable ZIP of all generated certificates
+- A downloadable PDF certificate for the student
 
 ### `GET /`
 Test route — returns a simple success message to confirm server is up.
