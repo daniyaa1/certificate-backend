@@ -4,13 +4,6 @@ This is the backend for the Certificate Generator project. It receives file uplo
 
 ---
 
-## 🔗 Live Backend Endpoint
-
-🌐 [certificate-backend-production.up.railway.app](https://certificate-backend-production.up.railway.app)
-
-Use this endpoint to interact with the backend from your deployed frontend.
-
----
 
 ## ⚙️ Tech Stack
 
