@@ -22,7 +22,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000', // react-scripts default dev server
     'http://127.0.0.1:3000', // local development via IP
-    'https://certificate-frontend-eight.vercel.app'
+    'https://certificate-frontend-eight.vercel.app',
+    'https://certificate-frontend-pk6u.vercel.app'
   ],
   methods: ['POST', 'GET'],
 }));
